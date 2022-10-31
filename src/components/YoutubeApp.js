@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 import styles from "./styles/app.module.css";
@@ -7,9 +7,16 @@ import SearchForm from "./SearchForm";
 import YoutubePlayer from "./YoutubePlayer";
 import PreviewList from "./PreviewList";
 
+
+
 const YoutubeApp = () => {
-  const [videos, setVideos] = useState(null);
-  const [activeVideoId, setActiveVideoId] = useState(null);
+  console.log(localStorage.getItem('videos'));
+  
+  const [videos, setVideos] = useState(localStorage.getItem('videos') ? JSON.parse(localStorage.getItem('videos')) : []);
+  console.log(videos);
+
+  const [activeVideoId, setActiveVideoId] = useState(localStorage.getItem('activeVideoId') ? localStorage.getItem('activeVideoId') : '');
+
 
   const searchVideo = (searchPhrase) => {
     if (searchPhrase) {
@@ -18,9 +25,10 @@ const YoutubeApp = () => {
         )
         .then((response) => {
           const videos = response.data;
-          console.log(videos);
+          console.log({videos});
+          console.log(videos.items);
           const firstVideo = videos.items[0].id.videoId;
-          setVideos(videos);
+          setVideos(videos.items); //сразу вставили в массив айтемы
           setActiveVideoId(firstVideo);
         });
     } else {
@@ -33,12 +41,29 @@ const selectVideo = (videoId) => {
 
 }
 
+
+useEffect(() => {
+  localStorage.setItem('videos', JSON.stringify(videos));
+}, [videos]);
+
+
+useEffect(() => {
+  localStorage.setItem('activeVideoId', activeVideoId);
+}, [activeVideoId]);
+
+
+
   return (
     <>
       <SearchForm onSubmit={searchVideo} />
       {videos && (
         <div className={styles.mainBlock}>
           <YoutubePlayer videoId={activeVideoId}/>
+          <button onClick={() => {
+            setVideos([])
+            setActiveVideoId('')
+
+          }}>CLICK</button>
           <PreviewList videos={videos} onClick={selectVideo}/>
         </div>
       )}
