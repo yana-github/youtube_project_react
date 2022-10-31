@@ -5,6 +5,7 @@ import styles from "./styles/app.module.css";
 
 import SearchForm from "./SearchForm";
 import YoutubePlayer from "./YoutubePlayer";
+import CommentsForm from "./CommentsForm";
 import PreviewList from "./PreviewList";
 
 
@@ -62,8 +63,10 @@ useEffect(() => {
           <button onClick={() => {
             setVideos([])
             setActiveVideoId('')
-
           }}>CLICK</button>
+          <br/>
+          <CommentsForm />
+          <br/>
           <PreviewList videos={videos} onClick={selectVideo}/>
         </div>
       )}

@@ -1,0 +1,7 @@
+.player {
+    display: flex;
+    margin-top: 20%;
+    margin-bottom: 50px;
+    min-height: 315px;
+    height: 100%;
+}

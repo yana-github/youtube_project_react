@@ -1,0 +1,9 @@
+.allComments{
+    margin-top: 40%;
+}
+
+.listBlock{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
