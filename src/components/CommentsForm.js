@@ -1,31 +1,43 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
+import moment from "moment";
 import styles from "./styles/commentsForm.module.css";
-import Notification from "./CommentsList";
 
 class CommentsForm extends React.Component {
   state = {
-    showNotification: false,
+    name: "",
+    email: "",
+    message: "",
+    time: "",
+    isPublished: false,
   };
 
   handleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value }); //из какого нейма мы тянем данные, так как функция у нас единая.Нейм хранится в Е.Таргет.Будут созданы состояния
+    this.setState({ [name]: value });
   };
 
   sendForm = (e) => {
-    e.preventDefault(); //страница не обновляется
-    e.target.reset(); //перезагрузить форму, очистить поля
-    this.setState({ showNotification: true });
+    e.preventDefault();
+    e.target.reset();
+    this.setState({ isPublished: true });
+
+    const comment = {
+      username: this.state.name,
+      userEmail: this.state.email,
+      content: this.state.message,
+      id: uuidv4(),
+      date: moment().toISOString(true),
+    };
+
+    this.props.onCommentSubmit(comment)
   };
 
-  render() {
-    const { name, email, message, showNotification } = this.state;
 
+
+  render() {
     return (
       <>
-        {showNotification && (
-          <Notification name={name} email={email} message={message} />
-        )}
         <form className={styles.commentsForm} onSubmit={this.sendForm}>
           <p>
             <b>Введите ваш отзыв:</b>
