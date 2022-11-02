@@ -1,0 +1,16 @@
+.commentsList {
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    align-items: flex-start;
+}
+
+.commentsItem {
+    width: 100%;
+    min-height: 10px;
+    background: rgb(188, 207, 216);
+    border: 2px solid rgb(72, 117, 117);
+}
+
+
+

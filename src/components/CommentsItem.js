@@ -3,16 +3,21 @@ import moment from "moment";
 import styles from "./styles/commentsItem.module.css";
 
 const CommentsItem = (props) => {
-  const { username, userEmail, content, id, date } = props;
+  const { username, content, id, date } = props;
 
   return (
     <>
       <div className={styles.commentsList} key={id}>
-        <div> Пользователь {username}</div>
-        <div> Email {userEmail}</div>
-        <div>Дата комментария{`${moment(date).format("DD.MM.YYY HH:mm")}`}</div>
+        <div className={styles.commentsItem}>
+          <p>
+            <b>{username}</b>
+          </p>
+        </div>
+        <div className={styles.commentsItem}>
+          <p>{content}</p>
+        </div>
+        {`${moment(date).format("DD.MM.YYY HH:mm")}`}
       </div>
-      <div> Комментарий {content}</div>
     </>
   );
 };
